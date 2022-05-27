@@ -8,6 +8,7 @@
     "build"
   ],
   "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
     "outDir": "build",
     "rootDir": "./",
     "sourceMap": true,
