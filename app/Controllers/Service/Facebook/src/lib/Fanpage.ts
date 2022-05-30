@@ -13,9 +13,11 @@ class Fanpage {
     await func.click("._5rpb > .notranslate > div > div > ._1mf");
     await func.delay(0.5);
     await func.input(fanpage.content, "", 50);
-    await selectImages(func, fanpage?.images);
+    await func.delay(0.5);
+    const pathFiles = await selectImages(func, fanpage?.images);
     await func.delay(1);
     await publishContent(func);
+    if (pathFiles) await func.deleteFiles(pathFiles);
   }
 }
 

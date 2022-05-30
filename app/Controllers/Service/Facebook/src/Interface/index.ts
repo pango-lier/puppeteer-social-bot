@@ -14,7 +14,7 @@ export interface Profile {
 }
 
 export interface PuppeteerInterface {
-  page?: Page;
-  browser?: Browser;
+  page: Page;
+  browser: Browser;
   func: PuppeteerActionFunc;
 }

@@ -127,10 +127,10 @@ export class PuppeteerActionFunc {
     return result;
   }
 
-  uploadImage = async (
+  async uploadImage(
     imagePaths: string[],
     fileChooserTriggerXpath: string
-  ) => {
+  ): Promise<string[]> {
     let pathFiles: string[] = [];
     await imagePaths.forEach(async (imagePath) => {
       const pathFile = await downloadFile(imagePath);
@@ -143,7 +143,21 @@ export class PuppeteerActionFunc {
     ]);
 
     await fileChooser?.accept(pathFiles);
-  };
+    return pathFiles;
+  }
+
+  async deleteFiles(pathFiles: string[]): Promise<boolean> {
+    await pathFiles.forEach(async (pathFile) => {
+      try {
+        const fs = require("fs");
+        await delay(0.3);
+        await fs.unlinkSync(pathFile);
+      } catch (e) {}
+    });
+
+    return true;
+  }
+
   /**
    * Delay
    * @param {puppeteer.Page} page current tab
