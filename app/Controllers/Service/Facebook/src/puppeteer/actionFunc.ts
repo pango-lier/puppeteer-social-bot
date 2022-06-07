@@ -1,5 +1,5 @@
 import puppeteer, { ElementHandle, HTTPResponse } from "puppeteer";
-import { delay, downloadFile } from "../utils";
+import { delay, downloadFile, random } from "../utils";
 
 export class PuppeteerActionFunc {
   page: puppeteer.Page;
@@ -51,41 +51,6 @@ export class PuppeteerActionFunc {
    * @param {IStep} step step action
    * @returns {ElementHandle<Element>}
    */
-  async awaitElementRemove(selector): Promise<ElementHandle<Element>> {
-    return this.page.waitForSelector(selector, { hidden: true });
-  }
-  async getElementByContent(content: string, target): Promise<ElementHandle> {
-    const elements = await this.page.$$(target);
-    for (const element of elements) {
-      const contentElement = await this.page.evaluate(
-        (name) => name.innerText,
-        element
-      );
-      if ((contentElement || "").trim() === content) {
-        return element;
-      }
-    }
-    return null;
-  }
-  async getElementByElement(
-    element: ElementHandle,
-    target: string
-  ): Promise<ElementHandle> {
-    if (!element) {
-      return null;
-    }
-    const parentElement = await element.getProperty("parentNode");
-    if (!parentElement) {
-      return null;
-    }
-    const found = await parentElement.asElement().$(target);
-    if (!found) {
-      return this.getElementByElement(parentElement.asElement(), target);
-    }
-    if (found) {
-      return found;
-    }
-  }
   /**
    * Type some text with speed per character is default 0,05s
    * @param {puppeteer.Page} page current tab
@@ -98,7 +63,7 @@ export class PuppeteerActionFunc {
       await this.page.keyboard.press("Backspace");
     }
     if (value !== null && value !== undefined && value !== "null") {
-      return this.page.keyboard.type(value + "", {
+      return this.page.keyboard.type(value, {
         delay: this.delayTypingTime * delay,
       });
     }
@@ -167,12 +132,25 @@ export class PuppeteerActionFunc {
   async delay(selector): Promise<void> {
     return delay(Number(selector));
   }
+
+  async delayRandom(min, max): Promise<void> {
+    return delay(Number(random(min, max)));
+  }
+
   async getContent(selector): Promise<string> {
     return this.page.evaluate((selector) => {
       const element = document.querySelector(selector);
       return element.textContent.trim();
     }, selector);
   }
+
+  async mouseWheelY(min: number, max: number = -1) {
+    if (max == -1) {
+      max = min;
+    }
+    await this.page.mouse.wheel({ deltaY: random(min, max) });
+  }
+
   async clickTryCheck(selectorTarget, selectorCheck, loop = 5, delay = 1) {
     for (let i = 0; i < loop; i++) {
       await this.click(selectorTarget);
@@ -182,72 +160,11 @@ export class PuppeteerActionFunc {
       }
     }
   }
-  // async changeValueInputOnContainer(selector): Promise<void> {
-  //   return this.page.evaluate(async (variables) => {
-  //     const variable = JSON.parse(variables);
-  //     const elements = Array.from(document.querySelectorAll(variable.target));
-  //     for (const element of elements) {
-  //       switch (variable.type) {
-  //         case "checkbox":
-  //           const valueCheckbox = element.checked + "";
-  //           if (variable.value === valueCheckbox) {
-  //             element.click();
-  //           }
-  //           element.click();
-  //           element.checked = variable.value === "true";
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //       await new Promise((rs) => setTimeout(rs, 300));
-  //     }
-  //   }, JSON.stringify(step));
-  // }
-  // async setCheckedInput(target: string, value: any): Promise<void> {
-  //   await delay(this.delayClickTime);
-  //   return this.page.evaluate((variables) => {
-  //     const { target: e, value: v } = JSON.parse(variables);
-  //     const element = document.querySelector(e);
-  //     if (element) {
-  //       element.scrollIntoView({ behavior: "smooth" });
-  //       if (element.checked === v) {
-  //         element.click();
-  //       }
-  //       element.click();
-  //       element.checked = v;
-  //     }
-  //   }, JSON.stringify({ target, value }));
-  // }
-  // async bulkSetCheckedInput(target: string, value: any): Promise<void> {
-  //   await delay(this.delayClickTime);
-  //   return this.page.evaluate((variables) => {
-  //     const { target: e, value: v } = JSON.parse(variables);
-  //     const elements = Array.from(document.querySelectorAll(e));
-  //     for (const element of elements) {
-  //       if (element) {
-  //         element.scrollIntoView({ behavior: "smooth" });
-  //         if (element.checked === v) {
-  //           element.click();
-  //         }
-  //         element.click();
-  //         element.checked = v;
-  //       }
-  //     }
-  //   }, JSON.stringify({ target, value }));
-  // }
 
   checkSelector(params) {
     return this.page.evaluate((params) => {
       return document.querySelector(params) === null ? false : true;
     }, params);
-  }
-
-  checkDisabledId(id) {
-    return this.page.evaluate((id) => {
-      return document.getElementById(id).hasAttribute("disabled")
-        ? true
-        : false;
-    }, id);
   }
 
   checkDisabledSelector(params, attribute = "disabled") {

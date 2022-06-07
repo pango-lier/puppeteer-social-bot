@@ -11,7 +11,7 @@ export const Login = async (profile: Profile) => {
   let images = [
     "https://nhomkinhdalat.com/storage/post/t164765729689.jpg",
   ];
-  await Fanpage.publishContent(pup, {
+  await Fanpage.commentPost(pup, {
     url: url,
     content: "test",
     images: images,

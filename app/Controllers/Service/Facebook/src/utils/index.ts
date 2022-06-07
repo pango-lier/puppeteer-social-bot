@@ -40,12 +40,15 @@ export const random = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-export interface MouseWheelRandomInterface{
-  page:any,
-  positionMin:number,
-  positionMax:number,
-  delayMin:number,
-  delayMax:number,
+export const delayRandom = async (min, max) => {
+  return await delay(random(min, max));
+};
+export interface MouseWheelRandomInterface {
+  page: any;
+  positionMin: number;
+  positionMax: number;
+  delayMin: number;
+  delayMax: number;
 }
 export const mouseWheel = async (page) => {
   for (let i = 0; i < random(2, 8); i++) {
