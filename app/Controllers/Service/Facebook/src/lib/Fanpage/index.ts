@@ -17,7 +17,10 @@ class Fanpage {
   async commentPost(pup: PuppeteerInterface, fanpage: FanpageInterface) {
     const { func } = pup;
     await func.goto(fanpage.url);
-    await CommentPost.create(pup,fanpage);
+    await CommentPost.create(pup, {
+      images: fanpage.images,
+      content: fanpage.content,
+    });
   }
 }
 

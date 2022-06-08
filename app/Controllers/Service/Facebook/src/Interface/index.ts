@@ -18,3 +18,16 @@ export interface PuppeteerInterface {
   browser: Browser;
   func: PuppeteerActionFunc;
 }
+
+export interface CommentInterface {
+  content: string;
+  images?: string[];
+  type?: string;
+}
+
+export interface GroupInterface {
+  url: string;
+  content: string;
+  images?: string[];
+  user?: Profile;
+}

@@ -1,4 +1,8 @@
-import { FanpageInterface, PuppeteerInterface } from "../../Interface";
+import {
+  CommentInterface,
+  FanpageInterface,
+  PuppeteerInterface,
+} from "../../Interface";
 
 const ACTION_SELECT_INTERACT =
   ".oajrlxb2 > .l9j0dhe7 > .bp9cbjyn > .rq0escxv:nth-child(2) > .hu5pjgll";
@@ -26,20 +30,20 @@ const COMMENT_TYPE_2_IMAGE = (st: number) => {
 };
 
 class CommentPost {
-  async create(pup: PuppeteerInterface, fanpage: FanpageInterface) {
+  async create(pup: PuppeteerInterface, comment: CommentInterface) {
     const { func } = pup;
     await func.clickTryCheck(ACTION_SELECT_INTERACT, ACTION_SELECT_USER);
     await func.click(ACTION_SELECT_USER);
     await func.delay(2);
 
-    const pathFiles = await commentPostRecent(pup, fanpage, 5);
+    const pathFiles = await commentPostRecent(pup, comment, 5);
     if (pathFiles) await func.deleteFiles(pathFiles);
   }
 }
 
 const commentPostRecent = async (
   pup: PuppeteerInterface,
-  fanpage: FanpageInterface,
+  comment: CommentInterface,
   numRecentPost = 10
 ) => {
   const { func } = pup;
@@ -50,25 +54,25 @@ const commentPostRecent = async (
     let selectorComment;
     let selectImages;
     if (await func.checkSelector(COMMENT_TYPE_1(i))) {
-      if (fanpage?.images) {
+      if (comment?.images) {
         selectorComment = COMMENT_TYPE_1_UPLOADTED(i);
         selectImages = COMMENT_TYPE_1_IMAGE(i);
       } else selectorComment = COMMENT_TYPE_1(i);
     }
     if (await func.checkSelector(COMMENT_TYPE_2(i))) {
-      if (fanpage?.images) {
+      if (comment?.images) {
         selectorComment = COMMENT_TYPE_2_UPLOADTED(i);
         selectImages = COMMENT_TYPE_2_IMAGE(i);
       } else selectorComment = COMMENT_TYPE_2(i);
     }
     if (selectorComment) {
-      if (selectImages && fanpage?.images) {
-        const imgs = await func.uploadImage(fanpage.images, selectImages);
+      if (selectImages && comment?.images) {
+        const imgs = await func.uploadImage(comment.images, selectImages);
         pathFiles = pathFiles.concat(imgs);
         await func.delay(2);
       }
       await func.click(selectorComment);
-      await func.input(fanpage.content, "", 0.3);
+      await func.input(comment.content, "", 0.3);
       await func.input(String.fromCharCode(13));
     }
   }
