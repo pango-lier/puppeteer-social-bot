@@ -8,7 +8,11 @@
     "build"
   ],
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
     "outDir": "build",
     "rootDir": "./",
     "sourceMap": true,
@@ -29,7 +33,8 @@
     "types": [
       "@adonisjs/core",
       "@adonisjs/repl",
-      "@japa/preset-adonis/build/adonis-typings"
+      "@japa/preset-adonis/build/adonis-typings",
+      "@adonisjs/lucid"
     ]
   }
 }
