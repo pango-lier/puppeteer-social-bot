@@ -19,6 +19,8 @@ class BrowserProfile {
         "--headless",
         "--disable-gpu",
         "--disable-dev-shm-usage",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-backing-store-limit",
       ],
     });
   }

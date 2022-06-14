@@ -20,6 +20,7 @@ export interface PuppeteerInterface {
 }
 
 export interface CommentInterface {
+  url: string;
   content: string;
   images?: string[];
   type?: string;

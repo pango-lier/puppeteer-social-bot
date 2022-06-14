@@ -1,6 +1,5 @@
 import {
   CommentInterface,
-  FanpageInterface,
   PuppeteerInterface,
 } from "../../Interface";
 
