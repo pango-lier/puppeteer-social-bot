@@ -1,19 +1,11 @@
-import {
-  CommentInterface,
-  PuppeteerInterface,
-} from "../../Interface";
+import { CommentInterface, PuppeteerInterface } from "../../Interface";
+import SwitchUser from "./SwitchUser";
 
-const ACTION_SELECT_INTERACT =
-  ".oajrlxb2 > .l9j0dhe7 > .bp9cbjyn > .rq0escxv:nth-child(2) > .hu5pjgll";
-const ACTION_SELECT_PAGE =
-  ".oajrlxb2:nth-child(1) > .bp9cbjyn > .j83agx80 > .qzhwtbm6 > .d2edcug0";
-const ACTION_SELECT_USER =
-  ".oajrlxb2:nth-child(2) > .bp9cbjyn > .j83agx80 > .qzhwtbm6 > .d2edcug0";
 const COMMENT_TYPE_1 = (st: number) => {
   return `.du4w35lb:nth-child(${st}) > .du4w35lb:nth-child(1) > div:nth-child(1) .lzcic4wl:nth-child(1) > .j83agx80:nth-child(1) > .rq0escxv:nth-child(1) > .j83agx80:nth-child(1) .cwj9ozl2:nth-child(2) .m9osqain:nth-child(1) .hcukyx3x:nth-child(1)`;
 };
 const COMMENT_TYPE_1_UPLOADTED = (st: number) => {
-  return `.du4w35lb:nth-child(1) > .du4w35lb:nth-child(1) > div:nth-child(1) .lzcic4wl:nth-child(1) > .j83agx80:nth-child(1) > .rq0escxv:nth-child(1) > .j83agx80:nth-child(1) .o6r2urh6:nth-child(1) > .o6r2urh6:nth-child(1) .hcukyx3x:nth-child(1)`;
+  return `.du4w35lb:nth-child(${st}) > .du4w35lb:nth-child(1) > div:nth-child(1) .lzcic4wl:nth-child(1) > .j83agx80:nth-child(1) > .rq0escxv:nth-child(1) > .j83agx80:nth-child(1) .o6r2urh6:nth-child(1) > .o6r2urh6:nth-child(1) .hcukyx3x:nth-child(1)`;
 };
 const COMMENT_TYPE_1_IMAGE = (st: number) => {
   return `.du4w35lb:nth-child(${st}) > .du4w35lb:nth-child(1) > div:nth-child(1) .lzcic4wl:nth-child(1) > .j83agx80:nth-child(1) > .rq0escxv:nth-child(1) > .j83agx80:nth-child(1) > .rq0escxv:nth-child(1) .ggphbty4:nth-child(2) .oajrlxb2:nth-child(1)`;
@@ -31,23 +23,20 @@ const COMMENT_TYPE_2_IMAGE = (st: number) => {
 class CommentPost {
   async create(pup: PuppeteerInterface, comment: CommentInterface) {
     const { func } = pup;
-    await func.clickTryCheck(ACTION_SELECT_INTERACT, ACTION_SELECT_USER);
-    await func.click(ACTION_SELECT_USER);
-    await func.delay(2);
-
-    const pathFiles = await commentPostRecent(pup, comment, 5);
+    await SwitchUser.selectUser(pup);
+    const pathFiles = await commentPostRecent(pup, comment);
     if (pathFiles) await func.deleteFiles(pathFiles);
   }
 }
 
 const commentPostRecent = async (
   pup: PuppeteerInterface,
-  comment: CommentInterface,
-  numRecentPost = 10
+  comment: CommentInterface
 ) => {
   const { func } = pup;
   let pathFiles: string[] = [];
-  for (let i = 1; i < numRecentPost; i++) {
+  const endLoop = comment.type?.postRecentEnd || comment.type.postRecentStart;
+  for (let i = comment.type.postRecentStart; i <= endLoop; i++) {
     await func.mouseWheelY(i * 500, i * 800);
     await func.delayRandom(2, 6);
     let selectorComment;
@@ -68,7 +57,7 @@ const commentPostRecent = async (
       if (selectImages && comment?.images) {
         const imgs = await func.uploadImage(comment.images, selectImages);
         pathFiles = pathFiles.concat(imgs);
-        await func.delay(2);
+        await func.delay(5);
       }
       await func.click(selectorComment);
       await func.input(comment.content, "", 0.3);

@@ -19,11 +19,21 @@ export interface PuppeteerInterface {
   func: PuppeteerActionFunc;
 }
 
+export enum ECommenType {
+  index = "index",
+  random = "random",
+}
+
+export interface ICommentType {
+  type: ECommenType;
+  postRecentStart: number;
+  postRecentEnd?: number;
+}
 export interface CommentInterface {
   url: string;
   content: string;
   images?: string[];
-  type?: string;
+  type: ICommentType;
 }
 
 export interface GroupInterface {
