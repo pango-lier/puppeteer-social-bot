@@ -1,10 +1,6 @@
 
 version: '3.8'
 
-networks:
-  socials:
-    external: false
-
 services:
   db:
     container_name: social_mysql
@@ -12,7 +8,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     volumes:
-      - dbbot:/var/lib/mysql/
+      - dbsocials:/var/lib/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DB_NAME}'
@@ -20,7 +16,7 @@ services:
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - 3307:3306
+      - 3306:3306
 
   adminer:
     container_name: social_adminer
@@ -37,8 +33,7 @@ services:
     image: redis:6-alpine
     volumes:
       - redis_volume:/data
-    networks:
-      - socials
+
   social_app:
     container_name: social_app
     restart: unless-stopped
@@ -56,9 +51,8 @@ services:
     volumes:
       - ./:/home/node/app
     command: dumb-init node ace serve --watch --node-args="--inspect=0.0.0.0"
-    networks:
-      - socials
+
 volumes:
-  dbbot:
+  dbsocials:
     driver: local
   redis_volume:

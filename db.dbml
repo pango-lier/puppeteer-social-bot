@@ -1,0 +1,41 @@
+Enum socialType{
+  facebook,
+  youtube
+}
+
+Enum postType{
+  image,
+  video
+}
+
+Table users {
+  id int [pk, increment]
+  email varchar
+  user_name varchar
+  password varchar [not null]
+  remember_me_token varchar
+  updated_at timestamp
+  created_at timestamp
+}
+
+Table api_tokens {
+  id int [pk, increment]
+  user_id int [not null, ref: > users.id]
+  name varchar [not null]
+  type varchar [not null]
+  expires_at timestamp
+  created_at timestamp
+}
+
+Table accounts {
+  id int [pk, increment]
+  social socialType [not null]
+  name varchar [not null]
+  userName varchar [not null]
+  password varchar [not null]
+}
+
+Table posts {
+  id int [pk, increment]
+  accountId int [not null, ref: > accounts.id]
+}
