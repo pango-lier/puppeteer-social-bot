@@ -1,5 +1,17 @@
 {
   "commands": {
+    "dowload:youtube": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/DowloadYoutube",
+      "commandName": "dowload:youtube",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",

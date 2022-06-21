@@ -1,13 +1,19 @@
 import request from "request";
+import axios from "axios";
 
 export const delay = (s): Promise<void> =>
   new Promise((rs) => setTimeout(rs, s * 1000));
 
-export const downloadFile = (url): Promise<string> => {
-  const fileName = url
-    .split("/")
-    .slice(-1)[0]
-    .replace(/\?(.*)/, "");
+export const downloadFile = (
+  url,
+  fileName: string | undefined = undefined
+): Promise<string> => {
+  if (fileName === undefined) {
+    fileName = url
+      .split("/")
+      .slice(-1)[0]
+      .replace(/\?(.*)/, "");
+  }
   const fs = require("fs");
   const path = require("path");
   const tempDir = path.join(__dirname, "temp");
@@ -55,4 +61,27 @@ export const mouseWheel = async (page) => {
     await delay(random(1, 12));
     await page.mouse.wheel({ deltaY: random(0, 20) * 300 });
   }
+};
+
+import * as stream from 'stream';
+import { promisify } from 'util';
+
+export const downloadFileAxios = async (fileUrl, downloadFolder, fileName) => {
+  // Get the file name
+  const fs = require("fs");
+  const path = require("path");
+  // The path of the downloaded file on our machine
+  const localFilePath = path.resolve(__dirname, downloadFolder, fileName);
+  const finished = promisify(stream.finished);
+  const writer = fs.createWriteStream(localFilePath);
+  return axios({
+    method: 'get',
+    url: fileUrl,
+    responseType: 'stream',
+  }).then(response => {
+    const totalLength = response.headers['content-length'];
+    console.log(totalLength);
+    response.data.pipe(writer);
+    return finished(writer); //this is a Promise
+  });
 };
