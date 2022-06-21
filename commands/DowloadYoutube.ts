@@ -1,4 +1,5 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
+import { PuppeteerInterface } from "App/Controllers/Service/Facebook/src/Interface";
 import {
   downloadFile,
   downloadFileAxios,
@@ -6,7 +7,7 @@ import {
 } from "App/Controllers/Service/Facebook/src/utils";
 import Youtube from "App/Controllers/Service/Youtube";
 import youtubedl, { create } from "youtube-dl-exec";
-
+import BrowserProfile from "../app/Controllers/Service/Facebook/src/puppeteer/browser"
 export default class DowloadYoutube extends BaseCommand {
   /**
    * Command name is used to run the command
@@ -35,7 +36,8 @@ export default class DowloadYoutube extends BaseCommand {
   };
 
   public async run() {
-    await Youtube.Short.dowloadVideo();
+    const pup: PuppeteerInterface = await BrowserProfile.StartUp();
+    await Youtube.Short.dowloadVideo(pup);
   }
 
   public async dowload() {

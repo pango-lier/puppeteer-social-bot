@@ -8,7 +8,7 @@ export enum EnumLink {
 }
 
 const links = (link: EnumLink) =>
-  `.style-scope:nth-child(${link}) > #items > .style-scope:nth-child(1) > #endpoint > .style-scope`;
+  `.style-scope:nth-child(1) > #items > .style-scope:nth-child(${link}) > #endpoint > .style-scope`;
 
 class Login {
   async goto(page: PuppeteerInterface) {
