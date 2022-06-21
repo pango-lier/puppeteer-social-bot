@@ -1,9 +1,10 @@
-import { FanPage } from "./src/Interface";
+import Fanpage from "./src/lib/Fanpage";
+import Group from "./src/lib/Group";
+import Login from "./src/lib/Login";
 
-
-class FacebookPuppeppteer {
-    async  publishPage(fanPage:FanPage) {
-        console.log(fanPage);
-    }
+class Facebook {
+  FanPage = new Fanpage();
+  Group = new Group();
+  Login = new Login();
 }
-export default new FacebookPuppeppteer();
+export default new Facebook();

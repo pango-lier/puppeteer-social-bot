@@ -7,9 +7,8 @@ import {
   PuppeteerInterface,
 } from "App/Controllers/Service/Facebook/src/Interface";
 import BrowserProfile from "App/Controllers/Service/Facebook/src/puppeteer/browser";
-import Fanpage from "App/Controllers/Service/Facebook/src/lib/Fanpage";
-import { login } from "App/Controllers/Service/Facebook/src/lib/Login";
 import Env from "@ioc:Adonis/Core/Env";
+import Facebook from "App/Controllers/Service/Facebook";
 export default class FanPagesController {
   public async post() {
     const profile: Profile = {
@@ -28,8 +27,8 @@ export default class FanPagesController {
     };
 
     const pup: PuppeteerInterface = await BrowserProfile.StartUp();
-    await login(pup.func, profile);
-    await Fanpage.commentPost(pup, comment);
+    await Facebook.Login.login(pup.func, profile);
+    await Facebook.FanPage.commentPost(pup, comment);
     await pup.func.delay(20);
     await BrowserProfile.stop(pup?.browser || "");
     return "ok";

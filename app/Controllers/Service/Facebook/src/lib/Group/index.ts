@@ -8,4 +8,4 @@ class Group {
     await publishContent(pup.func, group);
   }
 }
-export default new Group();
+export default Group;

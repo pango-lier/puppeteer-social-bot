@@ -25,4 +25,4 @@ class Fanpage {
   }
 }
 
-export default new Fanpage();
+export default Fanpage;

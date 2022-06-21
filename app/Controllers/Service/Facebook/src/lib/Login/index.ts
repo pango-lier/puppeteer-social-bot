@@ -18,9 +18,12 @@ export const clickLogin = async (func: PuppeteerActionFunc) => {
   );
 };
 
-export const login = async (func: PuppeteerActionFunc, profile: Profile) => {
-  await func.goto("https://www.facebook.com/");
-  await enterUserName(func, profile.userName);
-  await enterPassword(func, profile.password);
-  await clickLogin(func);
-};
+class Login {
+  async login(func: PuppeteerActionFunc, profile: Profile) {
+    await func.goto("https://www.facebook.com/");
+    await enterUserName(func, profile.userName);
+    await enterPassword(func, profile.password);
+    await clickLogin(func);
+  }
+}
+export default Login;
