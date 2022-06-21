@@ -1,5 +1,5 @@
 import { Profile } from "../../Interface";
-import { PuppeteerActionFunc } from "../../puppeteer/actionFunc";
+import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
 
 export const enterUserName = async (func: PuppeteerActionFunc, userName) => {
   await func.click("#email");

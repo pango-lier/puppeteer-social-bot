@@ -1,6 +1,6 @@
 import puppeteer, { Browser } from "puppeteer";
-import { PuppeteerInterface } from "../Interface";
-import { PuppeteerActionFunc } from "./actionFunc";
+import { PuppeteerInterface } from "../Facebook/src/Interface";
+import { PuppeteerActionFunc } from "./PuppeteerActionFunc";
 class BrowserProfile {
   async StartUp(): Promise<PuppeteerInterface> {
     const browser = await this.start();

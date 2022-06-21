@@ -6,7 +6,7 @@ import {
   Profile,
   PuppeteerInterface,
 } from "App/Controllers/Service/Facebook/src/Interface";
-import BrowserProfile from "App/Controllers/Service/Facebook/src/puppeteer/browser";
+import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 import Env from "@ioc:Adonis/Core/Env";
 import Facebook from "App/Controllers/Service/Facebook";
 export default class FanPagesController {

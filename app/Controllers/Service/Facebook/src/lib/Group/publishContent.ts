@@ -1,5 +1,5 @@
 import { GroupInterface } from "../../Interface";
-import { PuppeteerActionFunc } from "../../puppeteer/actionFunc";
+import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
 
 const CREATE_NEW_CONTENT_BUTTON =
   ".rq0escxv > .bp9cbjyn > .oajrlxb2 > .m9osqain > .a8c37x1j";

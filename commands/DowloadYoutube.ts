@@ -2,12 +2,11 @@ import { BaseCommand } from "@adonisjs/core/build/standalone";
 import { PuppeteerInterface } from "App/Controllers/Service/Facebook/src/Interface";
 import {
   downloadFile,
-  downloadFileAxios,
   random,
 } from "App/Controllers/Service/Facebook/src/utils";
 import Youtube from "App/Controllers/Service/Youtube";
-import youtubedl, { create } from "youtube-dl-exec";
-import BrowserProfile from "../app/Controllers/Service/Facebook/src/puppeteer/browser"
+import youtubedl from "youtube-dl-exec";
+import BrowserProfile from "../app/Controllers/Service/Puppeteer/BrowserProfile";
 export default class DowloadYoutube extends BaseCommand {
   /**
    * Command name is used to run the command
@@ -41,7 +40,7 @@ export default class DowloadYoutube extends BaseCommand {
   }
 
   public async dowload() {
-    this.logger.info("Hello world!");//https://www.youtube.com/shorts/OOcIwtX1me0
+    this.logger.info("Hello world!"); //https://www.youtube.com/shorts/OOcIwtX1me0
     // const path = await downloadFile(
     //   'https://www.youtube.com/shorts/OOcIwtX1me0',
     //   "vi" + random(1000, 1000000000)

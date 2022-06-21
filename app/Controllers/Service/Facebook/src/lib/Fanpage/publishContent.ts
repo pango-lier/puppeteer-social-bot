@@ -1,5 +1,5 @@
 import { FanpageInterface } from "../../Interface";
-import { PuppeteerActionFunc } from "../../puppeteer/actionFunc";
+import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
 
 const CREATE_NEW_CONTENT_BUTTON =
   ".buofh1pr:nth-child(2) > .oajrlxb2 > .l9j0dhe7 > .n00je7tq";

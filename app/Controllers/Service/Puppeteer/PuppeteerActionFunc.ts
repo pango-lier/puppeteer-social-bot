@@ -1,5 +1,5 @@
 import puppeteer, { ElementHandle, HTTPResponse } from "puppeteer";
-import { delay, downloadFile, random } from "../utils";
+import { delay, downloadFile, random } from "../Facebook/src/utils";
 
 export class PuppeteerActionFunc {
   page: puppeteer.Page;

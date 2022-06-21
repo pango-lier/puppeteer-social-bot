@@ -1,5 +1,5 @@
 import { Browser, Page } from "puppeteer";
-import { PuppeteerActionFunc } from "../puppeteer/actionFunc";
+import { PuppeteerActionFunc } from "../../../Puppeteer/PuppeteerActionFunc";
 
 export interface FanpageInterface {
   url: string;

@@ -1,7 +1,7 @@
 import { CommentInterface, Profile, PuppeteerInterface } from "../Interface";
-import BrowserProfile from "../puppeteer/browser";
-import Fanpage from "./Fanpage";
-import { login } from "./Login/index";
+import BrowserProfile from "../../../Puppeteer/BrowserProfile";
+=
+import Facebook from "../..";
 
 export const Example = async () => {
   const profile: Profile = {
@@ -15,8 +15,8 @@ export const Example = async () => {
   };
 
   const pup: PuppeteerInterface = await BrowserProfile.StartUp();
-  await login(pup.func, profile);
-  await Fanpage.commentPost(pup, comment);
+  await Facebook.Login.login(pup.func, profile);
+  await Facebook.FanPage.commentPost(pup, comment);
   await pup.func.delay(20);
   await BrowserProfile.stop(pup?.browser || "");
 };
