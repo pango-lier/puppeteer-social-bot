@@ -41,7 +41,7 @@ class Short {
   async dowloadVideo(page: PuppeteerInterface) {
     await Youtube.Login.goto(page);
     await Youtube.Login.gotoShort(page);
-    const links = await this.getLinks(page, {
+    await this.getLinks(page, {
       time: 100,
       intervalCLick: 400,
       enableDowload: true,

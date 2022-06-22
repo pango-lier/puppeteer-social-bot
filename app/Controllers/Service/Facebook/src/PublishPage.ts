@@ -1,9 +1,4 @@
-import { FanPage } from "./Interface";
-
 class PublishPage {
-    async post(fanPage:FanPage){
-        
-    }
-
+  async post() {}
 }
 export default new PublishPage();

@@ -74,23 +74,23 @@ export class PuppeteerActionFunc {
    * @param {IStep} step step action
    * @returns {void}
    */
-  async uploadFile(url, selector, conditionPass): Promise<boolean> {
-    const formUpload = await this.page.waitForSelector(selector);
-    const pathFile = await downloadFile(url);
-    await delay(1);
-    await formUpload.uploadFile(pathFile);
-    await delay(1);
-    const result = formUpload.evaluate((upload) =>
-      upload.dispatchEvent(new Event("change", { bubbles: true }))
-    );
-    // await this.page.waitForSelector(conditionPass, { timeout: 300000 });
-    try {
-      const fs = require("fs");
-      await delay(1);
-      await fs.unlinkSync(pathFile);
-    } catch (e) {}
-    return result;
-  }
+  // async uploadFile(url, selector, conditionPass): Promise<boolean> {
+  //   const formUpload = await this.page.waitForSelector(selector);
+  //   const pathFile = await downloadFile(url);
+  //   await delay(1);
+  //   await formUpload.uploadFile(pathFile);
+  //   await delay(1);
+  //   const result = formUpload.evaluate((upload) =>
+  //     upload.dispatchEvent(new Event("change", { bubbles: true }))
+  //   );
+  //   // await this.page.waitForSelector(conditionPass, { timeout: 300000 });
+  //   try {
+  //     const fs = require("fs");
+  //     await delay(1);
+  //     await fs.unlinkSync(pathFile);
+  //   } catch (e) {}
+  //   return result;
+  // }
 
   async uploadImage(
     imagePaths: string[],
@@ -199,7 +199,7 @@ export class PuppeteerActionFunc {
       let data = [];
       if (elements) {
         for (let i = 0; i < elements.length; i++) {
-          data.push(elements[i].textContent.trim());
+          // data.push(elements[i].textContent.trim());
         }
         return data;
       }

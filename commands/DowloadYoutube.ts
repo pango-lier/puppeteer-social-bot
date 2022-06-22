@@ -60,7 +60,7 @@ export default class DowloadYoutube extends BaseCommand {
       );
       for (const format of ouput.formats) {
         if (format.vcodec !== "none" && format.acodec !== "none") {
-          const path = await downloadFile(
+          await downloadFile(
             format.url,
             "vi" + random(1000, 1000000000) + "." + format.ext
           );

@@ -1,6 +1,6 @@
 import { CommentInterface, Profile, PuppeteerInterface } from "../Interface";
 import BrowserProfile from "../../../Puppeteer/BrowserProfile";
-=
+
 import Facebook from "../..";
 
 export const Example = async () => {

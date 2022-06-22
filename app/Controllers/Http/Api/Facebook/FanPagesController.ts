@@ -2,15 +2,19 @@
 
 import {
   CommentInterface,
-  ECommenType,
+  ECommentType,
   Profile,
   PuppeteerInterface,
 } from "App/Controllers/Service/Facebook/src/Interface";
 import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 import Env from "@ioc:Adonis/Core/Env";
 import Facebook from "App/Controllers/Service/Facebook";
+import BullMQ from "@ioc:Queue/BullMQ";
+import { QueueNamesEnum, TestProps } from "Contracts/queue/QueueInterfaces";
+const queue = BullMQ.queue<TestProps, TestProps>(QueueNamesEnum.TestJob);
 export default class FanPagesController {
   public async post() {
+    await queue.add("mytestJob", { name: "anyName" });
     const profile: Profile = {
       userName: Env.get("MY_PW"),
       password: Env.get("MY_USER"),
@@ -20,7 +24,7 @@ export default class FanPagesController {
       content: "test",
       images: ["https://nhomkinhdalat.com/storage/post/t164765729689.jpg"],
       type: {
-        type: ECommenType.random,
+        type: ECommentType.random,
         postRecentStart: 1,
         postRecentEnd: 2,
       },
