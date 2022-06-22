@@ -21,7 +21,8 @@
     "./providers/AppProvider",
     "@adonisjs/core",
     "@adonisjs/lucid",
-    "@adonisjs/auth"
+    "@adonisjs/auth",
+    "./providers/QueueBullMqProvider"
   ],
   "aceProviders": [
     "@adonisjs/repl"

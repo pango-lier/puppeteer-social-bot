@@ -12,6 +12,18 @@
       "aliases": [],
       "flags": []
     },
+    "queue:listener": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "./commands/QueueListener",
+      "commandName": "queue:listener",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
