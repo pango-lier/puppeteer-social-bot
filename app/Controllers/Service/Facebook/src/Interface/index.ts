@@ -33,7 +33,7 @@ export interface CommentInterface {
   url: string;
   content: string;
   images?: string[];
-  type?: ICommentType;
+  type: ICommentType;
 }
 
 export interface GroupInterface {

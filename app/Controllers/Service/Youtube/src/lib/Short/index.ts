@@ -14,7 +14,8 @@ class Short {
       enableDowload = false,
     }: { time: number; intervalCLick: number; enableDowload: boolean }
   ) {
-    let count = 0;
+    var count = 0;
+    console.log(count);
     const currentUrl = () => {
       return window.location.href;
     };

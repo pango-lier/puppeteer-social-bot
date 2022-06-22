@@ -35,7 +35,7 @@ export const downloadFile = (
       request
         .get(url)
         .pipe(fs.createWriteStream(filePath))
-        .on("close", (data) => resolve(filePath));
+        .on("close", () => resolve(filePath));
     });
   });
 };
@@ -63,8 +63,8 @@ export const mouseWheel = async (page) => {
   }
 };
 
-import * as stream from 'stream';
-import { promisify } from 'util';
+import * as stream from "stream";
+import { promisify } from "util";
 
 export const downloadFileAxios = async (fileUrl, downloadFolder, fileName) => {
   // Get the file name
@@ -75,11 +75,11 @@ export const downloadFileAxios = async (fileUrl, downloadFolder, fileName) => {
   const finished = promisify(stream.finished);
   const writer = fs.createWriteStream(localFilePath);
   return axios({
-    method: 'get',
+    method: "get",
     url: fileUrl,
-    responseType: 'stream',
-  }).then(response => {
-    const totalLength = response.headers['content-length'];
+    responseType: "stream",
+  }).then((response) => {
+    const totalLength = response.headers["content-length"];
     console.log(totalLength);
     response.data.pipe(writer);
     return finished(writer); //this is a Promise

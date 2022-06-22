@@ -1,4 +1,4 @@
-import puppeteer, { ElementHandle, HTTPResponse } from "puppeteer";
+import puppeteer, { HTTPResponse } from "puppeteer";
 import { delay, downloadFile, random } from "../Facebook/src/utils";
 
 export class PuppeteerActionFunc {
