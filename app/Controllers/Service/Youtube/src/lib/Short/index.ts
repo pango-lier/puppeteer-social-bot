@@ -20,38 +20,40 @@ class Short {
       return window.location.href;
     };
     const links: string[] = [];
-
+    const videos: any[] = [];
     const interval = setInterval(async () => {
-      const href: string = await page.page.evaluate(currentUrl);
-      // console.log(`${count} current URL is: ${href}`);
-      count++;
-      // await page.page.mouse.wheel({ deltaY: 250 * count });
-      if (random(0, 10) === 1) {
-        await page.page.click(BUTTON_DOWN);
-      }
-      if (!links.includes(href)) {
-        links.push(href);
-        if (enableDowload) YoutubeDl.dowload(href + "'");
+      try {
+        const href: string = await page.page.evaluate(currentUrl);
+        // console.log(`${count} current URL is: ${href}`);
+        count++;
+        // await page.page.mouse.wheel({ deltaY: 250 * count });
+        if (random(0, 10) === 1) {
+          await page.page.click(BUTTON_DOWN);
+        }
+        if (!links.includes(href)) {
+          links.push(href);
+          if (enableDowload) {
+            const video = await YoutubeDl.dowload(href + "'");
+            videos.push(video);
+          }
+        }
+      } catch (e) {
+        console.log(e?.message);
       }
     }, intervalCLick);
 
     await page.func.delay(time);
     await clearInterval(interval);
-    return links;
+    return { links, videos };
   }
-  async dowloadVideo(page: PuppeteerInterface) {
+  async downloadVideoAuto(page: PuppeteerInterface) {
     await Youtube.Login.goto(page);
     await Youtube.Login.gotoShort(page);
-    await this.getLinks(page, {
-      time: 100,
-      intervalCLick: 400,
+    return await this.getLinks(page, {
+      time: 20,
+      intervalCLick: 600,
       enableDowload: true,
     });
-    // for (const url of links) {
-    //   dowload(url + "'");
-    // }
-    // const url = "https://www.youtube.com/shorts/gPz-eLT8RIw" + "'";
-    //
   }
 }
 export default Short;

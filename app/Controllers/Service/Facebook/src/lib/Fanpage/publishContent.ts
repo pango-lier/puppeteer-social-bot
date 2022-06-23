@@ -13,7 +13,11 @@ export const publishContent = async (
   await func.delay(0.5);
   await func.input(fanpage.content, "", 50);
   await func.delay(2);
-  const pathFiles = await selectImages(func, fanpage?.images);
+  const pathFiles = await selectImages(
+    func,
+    fanpage?.images,
+    fanpage?.download
+  );
   await func.delay(1);
   await actionPublishContent(func);
   if (pathFiles) await func.deleteFiles(pathFiles);
@@ -25,13 +29,19 @@ const popupContent = async (func: PuppeteerActionFunc) => {
 };
 
 const actionPublishContent = async (func: PuppeteerActionFunc) => {
-  await func.waitForSelector(
-    ".j83agx80 > .j83agx80 > .ihqw7lf3 > .rq0escxv > .oajrlxb2:not([aria-disabled])"
-  );
-  await func.click(".j83agx80 > .j83agx80 > .ihqw7lf3 > .rq0escxv > .oajrlxb2");
+  const action1 = ".j83agx80 > .j83agx80 > .ihqw7lf3 > .rq0escxv > .oajrlxb2";
+  const action2 =
+    ".rq0escxv:nth-child(4) > .rq0escxv > .rq0escxv > .oajrlxb2 > .l9j0dhe7";
+  if (await func.checkSelector(action2)) {
+    await func.waitForSelector(`${action2}:not([aria-disabled])`);
+    await func.click(action2);
+  } else {
+    await func.waitForSelector(`${action1}:not([aria-disabled])`);
+    await func.click(action1);
+  }
 };
 
-const selectImages = async (func, images): Promise<string[]> => {
+const selectImages = async (func, images, download): Promise<string[]> => {
   if (images) {
     if (
       await func.checkSelector(
@@ -40,7 +50,8 @@ const selectImages = async (func, images): Promise<string[]> => {
     ) {
       return await func.uploadImage(
         images,
-        "div:nth-child(2) > .tojvnm2t > .oajrlxb2 > div > div > .tv7at329 > .iyyx5f41 > .bp9cbjyn > .hu5pjgll"
+        "div:nth-child(2) > .tojvnm2t > .oajrlxb2 > div > div > .tv7at329 > .iyyx5f41 > .bp9cbjyn > .hu5pjgll",
+        download
       );
     }
     await func.click(
@@ -49,7 +60,8 @@ const selectImages = async (func, images): Promise<string[]> => {
     await func.delay(2);
     return await func.uploadImage(
       images,
-      ".l9j0dhe7 > .rq0escxv > .rq0escxv > .s45kfl79 > .hu5pjgll"
+      ".l9j0dhe7 > .rq0escxv > .rq0escxv > .s45kfl79 > .hu5pjgll",
+      download
     );
   }
   return [];

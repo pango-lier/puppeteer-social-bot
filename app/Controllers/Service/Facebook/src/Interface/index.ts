@@ -6,6 +6,7 @@ export interface FanpageInterface {
   content: string;
   images?: string[];
   user?: Profile;
+  download?: boolean;
 }
 
 export interface Profile {
@@ -41,4 +42,5 @@ export interface GroupInterface {
   content: string;
   images?: string[];
   user?: Profile;
+  download?: boolean;
 }

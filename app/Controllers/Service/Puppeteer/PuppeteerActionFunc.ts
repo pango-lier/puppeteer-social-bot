@@ -94,14 +94,18 @@ export class PuppeteerActionFunc {
 
   async uploadImage(
     imagePaths: string[],
-    fileChooserTriggerXpath: string
+    fileChooserTriggerXpath: string,
+    download: boolean = true
   ): Promise<string[]> {
     let pathFiles: string[] = [];
-    await imagePaths.forEach(async (imagePath) => {
-      const pathFile = await downloadFile(imagePath);
-      pathFiles.push(pathFile);
-    });
-
+    if (!download) {
+      pathFiles = imagePaths;
+    } else {
+      await imagePaths.forEach(async (imagePath) => {
+        const pathFile = await downloadFile(imagePath);
+        pathFiles.push(pathFile);
+      });
+    }
     const [fileChooser] = await Promise.all([
       this.page.waitForFileChooser(),
       this.click(fileChooserTriggerXpath),

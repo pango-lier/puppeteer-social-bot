@@ -1,12 +1,12 @@
 {
   "commands": {
-    "dowload:youtube": {
+    "download:youtube": {
       "settings": {
         "loadApp": true,
         "stayAlive": false
       },
       "commandPath": "./commands/DowloadYoutube",
-      "commandName": "dowload:youtube",
+      "commandName": "download:youtube",
       "description": "",
       "args": [],
       "aliases": [],
