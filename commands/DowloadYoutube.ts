@@ -4,10 +4,7 @@ import {
   FanpageInterface,
   PuppeteerInterface,
 } from "App/Controllers/Service/Facebook/src/Interface";
-import {
-  downloadFile,
-  random,
-} from "App/Controllers/Service/Facebook/src/utils";
+import { downloadFile, random } from "App/Controllers/Service/utils";
 import { Profile } from "App/Controllers/Service/Types";
 import Youtube from "App/Controllers/Service/Youtube";
 import youtubedl from "youtube-dl-exec";
@@ -59,7 +56,7 @@ export default class DowloadYoutube extends BaseCommand {
       };
       await Facebook.FanPage.publishContent(pup, fanPage);
       await delay(5);
-      await pup.func.goto('https://www.facebook.com');
+      await pup.func.goto("https://www.facebook.com");
       await delay(20);
     }
 

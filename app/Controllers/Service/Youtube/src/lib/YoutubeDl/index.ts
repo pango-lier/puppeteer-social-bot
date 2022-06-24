@@ -1,7 +1,4 @@
-import {
-  downloadFile,
-  random,
-} from "App/Controllers/Service/Facebook/src/utils";
+import { downloadFile, random } from "App/Controllers/Service/utils";
 import youtubedl from "youtube-dl-exec";
 
 class YoutubeDl {

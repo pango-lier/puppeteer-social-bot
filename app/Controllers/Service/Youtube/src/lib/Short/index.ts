@@ -1,5 +1,5 @@
 import { PuppeteerInterface } from "App/Controllers/Service/Facebook/src/Interface";
-import { random } from "App/Controllers/Service/Facebook/src/utils";
+import { random } from "App/Controllers/Service/utils";
 import Youtube from "../../..";
 import YoutubeDl from "../YoutubeDl";
 
