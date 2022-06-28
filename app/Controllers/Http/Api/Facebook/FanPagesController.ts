@@ -32,6 +32,7 @@ export default class FanPagesController {
 
     const pup: PuppeteerInterface = await BrowserProfile.StartUp();
     await Facebook.Login.login(pup.func, profile);
+    await Facebook.FanPage.goto(pup, comment);
     await Facebook.FanPage.commentPost(pup, comment);
     await pup.func.delay(20);
     await BrowserProfile.stop(pup?.browser || "");
