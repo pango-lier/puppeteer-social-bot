@@ -4,7 +4,7 @@ import youtubedl from "youtube-dl-exec";
 class YoutubeDl {
   getLinks = async (options: { url: string }) => {
     let path: string | undefined = undefined;
-    const output = await youtubedl(options.url, {
+    const output = await youtubedl(options.url + "'", {
       dumpSingleJson: true,
       noWarnings: true,
       // noCallHome: true,
@@ -20,7 +20,6 @@ class YoutubeDl {
       }
     }
     return {
-      url: options.url,
       tags: output.tags,
       description: output.description,
       ext: output.ext,
@@ -28,16 +27,16 @@ class YoutubeDl {
       bestUrl: path,
     };
   };
-  dowload = async (url: string) => {
+  download = async (options: { url: string }) => {
     let path: string | undefined = undefined;
-    const output = await youtubedl(url, {
+    const output = await youtubedl(options.url + "'", {
       dumpSingleJson: true,
       noWarnings: true,
       // noCallHome: true,
       noCheckCertificate: true,
       preferFreeFormats: true,
       youtubeSkipDashManifest: true,
-      referer: url,
+      referer: options.url,
     });
     for (const format of output.formats) {
       if (format.vcodec !== "none" && format.acodec !== "none") {
@@ -50,11 +49,11 @@ class YoutubeDl {
       }
     }
     return {
-      url: url,
       tags: output.tags,
       description: output.description,
       ext: output.ext,
       path: path,
+      bestUrl: path,
     };
   };
 }

@@ -2,9 +2,10 @@ import { Browser, Page } from "puppeteer";
 import { PuppeteerActionFunc } from "../../../Puppeteer/PuppeteerActionFunc";
 
 export interface FanpageInterface {
-  url: string;
+  url?: string;
   content: string;
   images?: string[];
+  type?: string;
   user?: Profile;
   download?: boolean;
 }

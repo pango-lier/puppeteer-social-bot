@@ -8,9 +8,9 @@ import CommentPost from "./CommentPost";
 import { publishContent } from "./publishContent";
 
 class Fanpage {
-  async goto(pup: PuppeteerInterface, fanpage: FanpageInterface) {
+  async goto(pup: PuppeteerInterface, url: string) {
     const { func } = pup;
-    await func.goto(fanpage.url);
+    await func.goto(url);
   }
   async publishContent(pup: PuppeteerInterface, fanpage: FanpageInterface) {
     await publishContent(pup.func, fanpage);

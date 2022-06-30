@@ -18,9 +18,28 @@ export const publishContent = async (
     fanpage?.images,
     fanpage?.download
   );
-  await func.delay(1);
+  if (fanpage?.type === "video") {
+    await waitUploadVideo(func);
+  }
   await actionPublishContent(func);
   if (pathFiles) await func.deleteFiles(pathFiles);
+};
+
+const waitUploadVideo = async (func: PuppeteerActionFunc) => {
+  for (let i = 0; i < 10; i++) {
+    try {
+      await func.waitForSelector(
+        `.rq0escxv > .k4urcfbm > .l9j0dhe7 > .b3i9ofy5 > .n3ffmt46`
+      );
+      const content = await func.getContentSelector(
+        `.rq0escxv > .k4urcfbm > .l9j0dhe7 > .b3i9ofy5 > .n3ffmt46`
+      );
+      console.log(content);
+      if (content === "100%") break;
+      await func.delay(2);
+    } catch (e) {}
+    await func.delay(2);
+  }
 };
 
 const popupContent = async (func: PuppeteerActionFunc) => {

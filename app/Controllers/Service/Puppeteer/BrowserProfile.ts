@@ -12,11 +12,11 @@ class BrowserProfile {
 
   async start(): Promise<Browser> {
     return await puppeteer.launch({
-      headless: true,
-      executablePath: process.env.CHROME_BIN,
+      headless: false,
+      // executablePath: process.env.CHROME_BIN,
       args: [
         "--no-sandbox",
-        "--headless",
+        // "--headless",
         "--disable-gpu",
         "--disable-dev-shm-usage",
         "--disable-backgrounding-occluded-windows",

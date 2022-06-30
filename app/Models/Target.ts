@@ -1,39 +1,24 @@
 import { DateTime } from "luxon";
 import { BaseModel, column } from "@ioc:Adonis/Lucid/Orm";
 
-export default class Article extends BaseModel {
+export default class Target extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
   @column()
-  public crawler_id: number | null;
+  public account_id: number;
 
   @column()
-  public crawler_url_id: number;
+  public type: string;
 
   @column()
-  public target_id: number;
-
-  @column()
-  public user_created_id: number | null;
-
-  @column()
-  public type: string | null;
+  public url: string;
 
   @column()
   public name: string | null;
 
   @column()
-  public tags: string | null;
-
-  @column()
-  public hag_tag: string | null;
-
-  @column()
   public description: string | null;
-
-  @column()
-  public content: string | null;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

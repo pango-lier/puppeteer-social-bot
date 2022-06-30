@@ -7,6 +7,6 @@ export interface Article {
 }
 
 export interface Profile {
-  userName: string;
-  password: string;
+  userName?: string;
+  password?: string;
 }

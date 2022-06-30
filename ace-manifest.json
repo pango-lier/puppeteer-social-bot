@@ -1,5 +1,17 @@
 {
   "commands": {
+    "crawler:short_youtube": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "./commands/CrawlerShortYoutube",
+      "commandName": "crawler:short_youtube",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "download:youtube": {
       "settings": {
         "loadApp": true,
@@ -7,6 +19,18 @@
       },
       "commandPath": "./commands/DowloadYoutube",
       "commandName": "download:youtube",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "post:article_fanpage_facebook": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "./commands/PostArticleFanpageFacebook",
+      "commandName": "post:article_fanpage_facebook",
       "description": "",
       "args": [],
       "aliases": [],

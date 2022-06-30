@@ -49,6 +49,8 @@ export default class CrawlerShortYoutube extends BaseCommand {
     await Youtube.Login.gotoShort(pup);
     let offset = 30;
     while (1) {
+      console.log(offset-30);
+      try{
       await pup.func.delay(random(3, 15));
       const link = await Youtube.Short.getLink(pup, { offset });
       offset++;
@@ -59,6 +61,9 @@ export default class CrawlerShortYoutube extends BaseCommand {
         content: link.content,
       };
       await CrawlerUrl.updateOrCreate({ url: link.href }, crawlerUrl);
+    }catch(e){
+      console.log(e?.message);
+    }
     }
   }
 }

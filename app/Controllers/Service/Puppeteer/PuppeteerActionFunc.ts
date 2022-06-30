@@ -103,6 +103,7 @@ export class PuppeteerActionFunc {
     } else {
       await imagePaths.forEach(async (imagePath) => {
         const pathFile = await downloadFile(imagePath);
+        console.log(pathFile);
         pathFiles.push(pathFile);
       });
     }
