@@ -45,10 +45,8 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
   public async run() {
     const pup: PuppeteerInterface = await BrowserProfile.StartUp();
     const target = await Target.find(1);
-    console.log(target);
     if (target?.type === "facebook-fanpage") {
       const account = await Account.find(target?.account_id);
-      console.log(account);
       if (account?.user_name && account?.password) {
         const profile: Profile = {
           userName: account?.user_name,
@@ -56,7 +54,7 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
         };
         await Facebook.Login.login(pup.func, profile);
         await Facebook.FanPage.goto(pup, target.url);
-        const crawlers = await CrawlerUrl.all();
+        const crawlers = await CrawlerUrl.query().where("id", ">", 384);
         const fanPage: FanpageInterface = {
           content: "",
           images: [],
@@ -70,7 +68,7 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
             await pup.func.delay(random(3, 5));
             if (youtube.bestUrl) {
               fanPage.images = [youtube.bestUrl];
-              fanPage.content = ``; //${youtube.description} #shorts #video #youtube #pango
+              fanPage.content = `TikTok #reels #watch #shorts #video #youtube #pango`; //${youtube.description}
               await Facebook.FanPage.publishContent(pup, fanPage);
               await Article.create({
                 crawler_url_id: crawlerUrl.id,
@@ -78,10 +76,13 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
                 content: fanPage.content,
                 name: "youtube-short",
               });
-              await pup.func.delay(random(35, 55));
+              await pup.func.delay(random(40, 60));
             }
           } catch (e) {
             console.log(e.message);
+            await Facebook.Login.goto(pup.func);
+            await pup.func.delay(2);
+            await Facebook.FanPage.goto(pup, target.url);
           }
         }
       }

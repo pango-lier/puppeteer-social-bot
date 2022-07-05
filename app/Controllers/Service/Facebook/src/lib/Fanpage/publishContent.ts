@@ -12,7 +12,7 @@ export const publishContent = async (
   await popupContent(func);
   await func.delay(0.5);
   await func.input(fanpage.content, "", 50);
-  await func.delay(2);
+  await func.delay(5);
   const pathFiles = await selectImages(
     func,
     fanpage?.images,
@@ -36,10 +36,10 @@ const waitUploadVideo = async (func: PuppeteerActionFunc) => {
       );
       console.log(content);
       if (content === "100%") break;
-      await func.delay(2);
     } catch (e) {}
     await func.delay(2);
   }
+  await func.delay(3);
 };
 
 const popupContent = async (func: PuppeteerActionFunc) => {

@@ -25,5 +25,9 @@ class Login {
     await enterPassword(func, profile.password);
     await clickLogin(func);
   }
+
+  async goto(func: PuppeteerActionFunc) {
+    await func.goto("https://www.facebook.com/");
+  }
 }
 export default Login;
