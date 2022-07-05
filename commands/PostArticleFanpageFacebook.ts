@@ -1,19 +1,15 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
 import Facebook from "App/Controllers/Service/Facebook";
-import {
-  FanpageInterface,
-  Profile,
-  PuppeteerInterface,
-} from "App/Controllers/Service/Facebook/src/Interface";
+import { IFanpage } from "App/Controllers/Service/Facebook/src/Interface";
+
 import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 import { random } from "App/Controllers/Service/utils";
 import YoutubeDl from "App/Controllers/Service/Youtube/src/lib/YoutubeDl";
 import Account from "App/Models/Account";
 import Article from "App/Models/Article";
-import Crawler from "App/Models/Crawler";
 import CrawlerUrl from "App/Models/CrawlerUrl";
 import Target from "App/Models/Target";
-import user from "App/Models/user";
+import { IProfile, PuppeteerInterface } from "Contracts/Social";
 
 export default class PostArticleFanpageFacebook extends BaseCommand {
   /**
@@ -48,14 +44,14 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
     if (target?.type === "facebook-fanpage") {
       const account = await Account.find(target?.account_id);
       if (account?.user_name && account?.password) {
-        const profile: Profile = {
+        const profile: IProfile = {
           userName: account?.user_name,
           password: account?.password,
         };
         await Facebook.Login.login(pup.func, profile);
         await Facebook.FanPage.goto(pup, target.url);
         const crawlers = await CrawlerUrl.query().where("id", ">", 384);
-        const fanPage: FanpageInterface = {
+        const fanPage: IFanpage = {
           content: "",
           images: [],
           download: false,

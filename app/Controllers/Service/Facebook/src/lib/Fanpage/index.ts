@@ -1,8 +1,5 @@
-import {
-  CommentInterface,
-  FanpageInterface,
-  PuppeteerInterface,
-} from "../../Interface";
+import { PuppeteerInterface } from "Contracts/Social";
+import { IFanpage, IComment } from "../../Interface";
 import ActionOthers from "./ActionOthers";
 import CommentPost from "./CommentPost";
 import { publishContent } from "./publishContent";
@@ -12,13 +9,13 @@ class Fanpage {
     const { func } = pup;
     await func.goto(url);
   }
-  async publishContent(pup: PuppeteerInterface, fanpage: FanpageInterface) {
+  async publishContent(pup: PuppeteerInterface, fanpage: IFanpage) {
     await publishContent(pup.func, fanpage);
   }
-  async inviteFriend(pup: PuppeteerInterface, fanpage: FanpageInterface) {
+  async inviteFriend(pup: PuppeteerInterface) {
     await ActionOthers.inviteFriend(pup);
   }
-  async commentPost(pup: PuppeteerInterface, comment: CommentInterface) {
+  async commentPost(pup: PuppeteerInterface, comment: IComment) {
     await CommentPost.create(pup, comment);
   }
 }

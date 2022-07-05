@@ -1,5 +1,6 @@
-import { GroupInterface } from "../../Interface";
+
 import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
+import { IGroup } from "../../Interface";
 
 const CREATE_NEW_CONTENT_BUTTON =
   ".rq0escxv > .bp9cbjyn > .oajrlxb2 > .m9osqain > .a8c37x1j";
@@ -7,7 +8,7 @@ const INPUT_NEW_CONTENT = "._5rpb > .notranslate > div > .bi6gxh9e > ._1mf";
 
 export const publishContent = async (
   func: PuppeteerActionFunc,
-  group: GroupInterface
+  group: IGroup
 ) => {
   await popupContent(func);
   await func.delay(0.5);

@@ -1,4 +1,4 @@
-import { FanpageInterface } from "../../Interface";
+import { IFanpage } from "../../Interface";
 import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
 
 const CREATE_NEW_CONTENT_BUTTON =
@@ -7,7 +7,7 @@ const INPUT_NEW_CONTENT = "._5rpb > .notranslate > div > div > ._1mf";
 
 export const publishContent = async (
   func: PuppeteerActionFunc,
-  fanpage: FanpageInterface
+  fanpage: IFanpage
 ) => {
   await popupContent(func);
   await func.delay(0.5);
@@ -36,7 +36,7 @@ const waitUploadVideo = async (func: PuppeteerActionFunc) => {
       );
       console.log(content);
       if (content === "100%") break;
-    } catch (e) {}
+    } catch (e) { }
     await func.delay(2);
   }
   await func.delay(3);

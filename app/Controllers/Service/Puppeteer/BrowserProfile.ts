@@ -1,5 +1,5 @@
+import { PuppeteerInterface } from "Contracts/Social";
 import puppeteer, { Browser } from "puppeteer";
-import { PuppeteerInterface } from "../Facebook/src/Interface";
 import { PuppeteerActionFunc } from "./PuppeteerActionFunc";
 class BrowserProfile {
   async StartUp(): Promise<PuppeteerInterface> {
@@ -12,12 +12,12 @@ class BrowserProfile {
 
   async start(): Promise<Browser> {
     return await puppeteer.launch({
-      headless: false,
+      headless: true,
       // executablePath: process.env.CHROME_BIN,
       args: [
         "--no-sandbox",
         // "--headless",
-        "--disable-gpu",
+        // "--disable-gpu",
         "--disable-dev-shm-usage",
         "--disable-backgrounding-occluded-windows",
         "--disable-backing-store-limit",

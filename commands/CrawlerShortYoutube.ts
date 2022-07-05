@@ -1,10 +1,10 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
-import { PuppeteerInterface } from "App/Controllers/Service/Facebook/src/Interface";
 import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 import { random } from "App/Controllers/Service/utils";
 import Youtube from "App/Controllers/Service/Youtube";
 import Crawler from "App/Models/Crawler";
 import CrawlerUrl from "App/Models/CrawlerUrl";
+import { PuppeteerInterface } from "Contracts/Social";
 
 export default class CrawlerShortYoutube extends BaseCommand {
   /**
@@ -49,21 +49,21 @@ export default class CrawlerShortYoutube extends BaseCommand {
     await Youtube.Login.gotoShort(pup);
     let offset = 30;
     while (1) {
-      console.log(offset-30);
-      try{
-      await pup.func.delay(random(3, 15));
-      const link = await Youtube.Short.getLink(pup, { offset });
-      offset++;
-      await Youtube.Short.clickBtnDown(pup);
-      const crawlerUrl = {
-        url: link.href,
-        crawler_id: crawler?.id,
-        content: link.content,
-      };
-      await CrawlerUrl.updateOrCreate({ url: link.href }, crawlerUrl);
-    }catch(e){
-      console.log(e?.message);
-    }
+      console.log(offset - 30);
+      try {
+        await pup.func.delay(random(3, 15));
+        const link = await Youtube.Short.getLink(pup, { offset });
+        offset++;
+        await Youtube.Short.clickBtnDown(pup);
+        const crawlerUrl = {
+          url: link.href,
+          crawler_id: crawler?.id,
+          content: link.content,
+        };
+        await CrawlerUrl.updateOrCreate({ url: link.href }, crawlerUrl);
+      } catch (e) {
+        console.log(e?.message);
+      }
     }
   }
 }

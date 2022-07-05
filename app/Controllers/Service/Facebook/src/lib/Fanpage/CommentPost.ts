@@ -1,4 +1,6 @@
-import { CommentInterface, PuppeteerInterface } from "../../Interface";
+
+import { PuppeteerInterface } from "Contracts/Social";
+import { IComment } from "../../Interface";
 import SwitchUser from "./SwitchUser";
 
 const COMMENT_TYPE_1 = (st: number) => {
@@ -21,7 +23,7 @@ const COMMENT_TYPE_2_IMAGE = (st: number) => {
 };
 
 class CommentPost {
-  async create(pup: PuppeteerInterface, comment: CommentInterface) {
+  async create(pup: PuppeteerInterface, comment: IComment) {
     const { func } = pup;
     await SwitchUser.selectUser(pup);
     const pathFiles = await commentPostRecent(pup, comment);
@@ -31,12 +33,12 @@ class CommentPost {
 
 const commentPostRecent = async (
   pup: PuppeteerInterface,
-  comment: CommentInterface
+  comment: IComment
 ) => {
   const { func } = pup;
   let pathFiles: string[] = [];
-  const endLoop = comment.type?.postRecentEnd || comment.type.postRecentStart;
-  for (let i = comment.type.postRecentStart; i <= endLoop; i++) {
+  const endLoop = comment.options?.postRecentEnd || comment.options?.postRecentStart || 0;
+  for (let i = comment.options?.postRecentStart || 0; i <= endLoop; i++) {
     await func.mouseWheelY(i * 500, i * 800);
     await func.delayRandom(2, 6);
     let selectorComment;

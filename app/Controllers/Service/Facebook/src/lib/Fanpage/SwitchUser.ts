@@ -1,4 +1,4 @@
-import { PuppeteerInterface } from "../../Interface";
+import { PuppeteerInterface } from "Contracts/Social";
 
 const ACTION_SELECT_INTERACT =
   ".oajrlxb2 > .l9j0dhe7 > .bp9cbjyn > .rq0escxv:nth-child(2) > .hu5pjgll";

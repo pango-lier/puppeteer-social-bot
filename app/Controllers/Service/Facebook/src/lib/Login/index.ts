@@ -1,4 +1,5 @@
-import { Profile } from "../../Interface";
+
+import { IProfile } from "Contracts/Social";
 import { PuppeteerActionFunc } from "../../../../Puppeteer/PuppeteerActionFunc";
 
 export const enterUserName = async (func: PuppeteerActionFunc, userName) => {
@@ -19,7 +20,7 @@ export const clickLogin = async (func: PuppeteerActionFunc) => {
 };
 
 class Login {
-  async login(func: PuppeteerActionFunc, profile: Profile) {
+  async login(func: PuppeteerActionFunc, profile: IProfile) {
     await func.goto("https://www.facebook.com/");
     await enterUserName(func, profile.userName);
     await enterPassword(func, profile.password);

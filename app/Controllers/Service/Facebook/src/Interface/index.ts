@@ -1,25 +1,6 @@
-import { Browser, Page } from "puppeteer";
-import { PuppeteerActionFunc } from "../../../Puppeteer/PuppeteerActionFunc";
+import { ISocial } from "Contracts/Social";
 
-export interface FanpageInterface {
-  url?: string;
-  content: string;
-  images?: string[];
-  type?: string;
-  user?: Profile;
-  download?: boolean;
-}
-
-export interface Profile {
-  userName: string;
-  password: string;
-}
-
-export interface PuppeteerInterface {
-  page: Page;
-  browser: Browser;
-  func: PuppeteerActionFunc;
-}
+export interface IFanpage extends ISocial { }
 
 export enum ECommentType {
   index = "index",
@@ -31,17 +12,7 @@ export interface ICommentType {
   postRecentStart: number;
   postRecentEnd?: number;
 }
-export interface CommentInterface {
-  url: string;
-  content: string;
-  images?: string[];
-  type: ICommentType;
-}
 
-export interface GroupInterface {
-  url: string;
-  content: string;
-  images?: string[];
-  user?: Profile;
-  download?: boolean;
-}
+export interface IComment extends ISocial { options?: ICommentType; }
+
+export interface IGroup extends ISocial { }
