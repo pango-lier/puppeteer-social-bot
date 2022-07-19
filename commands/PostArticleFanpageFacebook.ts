@@ -1,15 +1,8 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
-import Facebook from "App/Controllers/Service/Facebook";
-import { IFanpage } from "App/Controllers/Service/Facebook/src/Interface";
+import { PostVideoLinkYoutubeFacebook } from "App/Controllers/Service/Manual/src/PostVideoLinkYoutubeFacebook";
 
-import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
-import { random } from "App/Controllers/Service/utils";
-import YoutubeDl from "App/Controllers/Service/Youtube/src/lib/YoutubeDl";
-import Account from "App/Models/Account";
-import Article from "App/Models/Article";
-import CrawlerUrl from "App/Models/CrawlerUrl";
+import Crawler from "App/Models/Crawler";
 import Target from "App/Models/Target";
-import { IProfile, PuppeteerInterface } from "Contracts/Social";
 
 export default class PostArticleFanpageFacebook extends BaseCommand {
   /**
@@ -39,49 +32,12 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
   };
 
   public async run() {
-    const pup: PuppeteerInterface = await BrowserProfile.StartUp();
-    const target = await Target.find(1);
-    if (target?.type === "facebook-fanpage") {
-      const account = await Account.find(target?.account_id);
-      if (account?.user_name && account?.password) {
-        const profile: IProfile = {
-          userName: account?.user_name,
-          password: account?.password,
-        };
-        await Facebook.Login.login(pup.func, profile);
-        await Facebook.FanPage.goto(pup, target.url);
-        const crawlers = await CrawlerUrl.query().where("id", ">", 384);
-        const fanPage: IFanpage = {
-          content: "",
-          images: [],
-          download: false,
-          type: "video",
-        };
-        for (const crawlerUrl of crawlers) {
-          try {
-            console.log(crawlerUrl.id + "--" + crawlerUrl.url);
-            const youtube = await YoutubeDl.download({ url: crawlerUrl.url });
-            await pup.func.delay(random(3, 5));
-            if (youtube.bestUrl) {
-              fanPage.images = [youtube.bestUrl];
-              fanPage.content = `TikTok #reels #watch #shorts #video #youtube #pango`; //${youtube.description}
-              await Facebook.FanPage.publishContent(pup, fanPage);
-              await Article.create({
-                crawler_url_id: crawlerUrl.id,
-                target_id: target.id,
-                content: fanPage.content,
-                name: "youtube-short",
-              });
-              await pup.func.delay(random(40, 60));
-            }
-          } catch (e) {
-            console.log(e.message);
-            await Facebook.Login.goto(pup.func);
-            await pup.func.delay(2);
-            await Facebook.FanPage.goto(pup, target.url);
-          }
-        }
-      }
-    }
+    const url = 'https://www.youtube.com/watch?v=6S5I1yjRWV4';
+    const description = 'Thế Chiến 1';
+    const tags = "#history #lichsu #lichsuAZ";
+    const target = await Target.find(2);
+    const crawler = await Crawler.find(2);
+    if (target && crawler) PostVideoLinkYoutubeFacebook({ url, description, tags }, crawler, target)
+    // if (target) AutoGetShortYoutubePostFacebook(target);
   }
 }

@@ -49,9 +49,9 @@ class YoutubeDl {
       }
     }
     return {
-      tags: output.tags,
-      description: output.description,
-      ext: output.ext,
+      tags: output?.tags,
+      description: output?.description,
+      ext: output?.ext,
       path: path,
       bestUrl: path,
     };

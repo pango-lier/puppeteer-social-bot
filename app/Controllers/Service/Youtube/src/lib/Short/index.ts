@@ -1,4 +1,5 @@
-import { PuppeteerInterface } from "App/Controllers/Service/Facebook/src/Interface";
+import { PuppeteerInterface } from "Contracts/Social";
+
 const BUTTON_DOWN =
   "#navigation-button-down > .style-scope > .yt-simple-endpoint > #button > #button > .style-scope";
 class Short {
