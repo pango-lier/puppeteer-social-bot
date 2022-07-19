@@ -9,6 +9,7 @@ import YoutubeDl from "../../Youtube/src/lib/YoutubeDl";
 export const PostVideoLinkYoutubeFacebook = async (options: { url: string, description: string, tags: string }, crawler: Crawler, target: Target) => {
 
   const { url, description, tags } = options;
+  console.log('start download video');
   const youtube = await YoutubeDl.download({ url });
   const crawlerUrl = await CrawlerUrl.updateOrCreate({ url: url }, {
     url: url,
@@ -18,6 +19,7 @@ export const PostVideoLinkYoutubeFacebook = async (options: { url: string, descr
   if (youtube.bestUrl) {
     // const target = await Target.find(2);
     if (!target) throw new Error('target not found .');
+    console.log('end download video');
     const pup = await Facebook.Hook.login(target);
     const fanPage: IFanpage = {
       content: "",
@@ -36,5 +38,6 @@ export const PostVideoLinkYoutubeFacebook = async (options: { url: string, descr
       name: "youtube-short",
     });
     await pup.func.delay(2);
+    await pup.browser.close();
   }
 }

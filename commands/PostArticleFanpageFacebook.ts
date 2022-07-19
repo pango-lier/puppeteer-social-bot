@@ -32,12 +32,29 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
   };
 
   public async run() {
-    const url = 'https://www.youtube.com/watch?v=6S5I1yjRWV4';
-    const description = 'Thế Chiến 1';
+    const urls = ['https://www.youtube.com/watch?v=7EXfyD_Yae0&t=447s',
+      'https://www.youtube.com/watch?v=MjeFdeEBZBo',
+      'https://www.youtube.com/watch?v=epElL3Drc9A',
+      'https://www.youtube.com/watch?v=hGZCPXBgbv4&t=352s',
+      'https://www.youtube.com/watch?v=DzFX2631jJw',
+      'https://www.youtube.com/watch?v=nG1kAukuIsk',
+      'https://www.youtube.com/watch?v=Ev7eJ_--Nx8',
+      'https://www.youtube.com/watch?v=b33Bqu00eEU',
+      'https://www.youtube.com/watch?v=HK5OsDWYJmQ',
+      'https://www.youtube.com/watch?v=1CqGeAmVu1I',
+      'https://www.youtube.com/watch?v=NtaLEt4GqNw',
+      'https://www.youtube.com/watch?v=ESsSUMYbH6I',
+      'https://www.youtube.com/watch?v=XqunXMp-A1M',
+      'https://www.youtube.com/watch?v=XuKLs3oV3xU'];
+    const description = '';
     const tags = "#history #lichsu #lichsuAZ";
     const target = await Target.find(2);
     const crawler = await Crawler.find(2);
-    if (target && crawler) PostVideoLinkYoutubeFacebook({ url, description, tags }, crawler, target)
+
+    for (const url of urls) {
+      if (target && crawler) await PostVideoLinkYoutubeFacebook({ url, description, tags }, crawler, target);
+    }
+
     // if (target) AutoGetShortYoutubePostFacebook(target);
   }
 }
