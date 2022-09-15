@@ -1,4 +1,5 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
+import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 
 export default class DowloadYoutube extends BaseCommand {
   /**
@@ -24,11 +25,28 @@ export default class DowloadYoutube extends BaseCommand {
      * you manually decide to exit the process. Don't forget to call
      * `node ace generate:manifest` afterwards.
      */
-    stayAlive: false,
+    stayAlive: true,
   };
 
-  // public async run() {
-  //   const pup: PuppeteerInterface = await BrowserProfile.StartUp();
+  public async run() {
+    const pup = await BrowserProfile.StartUp();
+    await pup.page.goto("https://myaccount.google.com/");
+    await pup.page.evaluate(() => {
+      window.scrollBy(0, window.innerHeight);
+    });
+    // click vao tai khoan dang nhap
+    await pup.func.click("#overview > .gacct-epilog > .gacct-epilog-col > .gacct-epilog-ctas > .h-c-button--primary");
+    //forcus nhap email
+    await pup.func.click('#identifierId');
+    await pup.func.input("binhtrongcdt1@gmail");
+    await pup.func.click('.qhFLie > #identifierNext > .VfPpkd-dgl2Hf-ppHlrf-sM5MNb > .VfPpkd-LgbsSe > .VfPpkd-vQzf8d');
+    //click nut xac nhan email
+    await pup.func.click('.F9NWFb > #identifierNext > .VfPpkd-dgl2Hf-ppHlrf-sM5MNb > .VfPpkd-LgbsSe > .VfPpkd-vQzf8d');
+    //forcus o password
+    await pup.func.click('#password > .aCsJod > .aXBtI > .Xb9hP > .whsOnd');
+    await pup.func.input("");
+    await pup.func.click('.qhFLie > #passwordNext > .VfPpkd-dgl2Hf-ppHlrf-sM5MNb > .VfPpkd-LgbsSe > .VfPpkd-vQzf8d');
+  }
   //   await Youtube.Login.goto(pup);
   //   await Youtube.Login.gotoShort(pup);
   //   const link = await Youtube.Short.getLink(pup);
