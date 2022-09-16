@@ -1,5 +1,17 @@
 {
   "commands": {
+    "convernt:image_to_text": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/ConverntImageToText",
+      "commandName": "convernt:image_to_text",
+      "description": "",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "crawler:short_youtube": {
       "settings": {
         "loadApp": true,
