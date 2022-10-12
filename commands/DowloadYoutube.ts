@@ -1,4 +1,6 @@
 import { BaseCommand } from "@adonisjs/core/build/standalone";
+import Google from "App/Controllers/Service/Google";
+import BrowserProfile from "App/Controllers/Service/Puppeteer/BrowserProfile";
 
 export default class DowloadYoutube extends BaseCommand {
   /**
@@ -24,17 +26,26 @@ export default class DowloadYoutube extends BaseCommand {
      * you manually decide to exit the process. Don't forget to call
      * `node ace generate:manifest` afterwards.
      */
-    stayAlive: false,
+    stayAlive: true,
   };
 
-  // public async run() {
-  //   const pup: PuppeteerInterface = await BrowserProfile.StartUp();
+  public async run() {
+    const pup = await BrowserProfile.StartUp();
+    await Google.GmailLogin.login(
+      {
+        email: "binhtrongcdt1@gmail.com",
+        password: "564752trongA",
+      },
+      pup
+    );
+
+    // click vao tai khoan dang nhap
+  }
   //   await Youtube.Login.goto(pup);
   //   await Youtube.Login.gotoShort(pup);
   //   const link = await Youtube.Short.getLink(pup);
   //   await Youtube.Short.clickBtnDown(pup);
   //   await pup.func.delay(random(2, 15));
-
 
   //   const profile: Profile = {
   //     userName: Env.get("MY_PW"),

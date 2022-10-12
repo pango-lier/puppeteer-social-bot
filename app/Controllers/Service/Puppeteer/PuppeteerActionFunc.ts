@@ -57,6 +57,20 @@ export class PuppeteerActionFunc {
    * @param {IStep} step step action
    * @returns {void}
    */
+
+  async location(): Promise<string> {
+    const currentUrl = () => {
+      return window.location.href;
+    };
+
+    return await this.page.evaluate(currentUrl);
+  }
+
+  async isUrlCurrent(url) {
+    const href = await this.location();
+    return href.search(url) >= 0;
+  }
+
   async input(value, currentValue = "", delay = 1000): Promise<void> {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < currentValue.length; i++) {
@@ -97,6 +111,7 @@ export class PuppeteerActionFunc {
     fileChooserTriggerXpath: string,
     download: boolean = true
   ): Promise<string[]> {
+    console.log("b");
     let pathFiles: string[] = [];
     if (!download) {
       pathFiles = imagePaths;
@@ -107,11 +122,12 @@ export class PuppeteerActionFunc {
         pathFiles.push(pathFile);
       });
     }
+    console.log(pathFiles);
     const [fileChooser] = await Promise.all([
       this.page.waitForFileChooser(),
       this.click(fileChooserTriggerXpath),
     ]);
-
+    console.log("ss");
     await fileChooser?.accept(pathFiles);
     return pathFiles;
   }
