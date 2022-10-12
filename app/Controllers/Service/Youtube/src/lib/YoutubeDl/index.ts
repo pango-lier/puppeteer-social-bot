@@ -1,5 +1,5 @@
 import { downloadFile, random } from "App/Controllers/Service/utils";
-import youtubedl from "youtube-dl-exec";
+import youtubedl, { YtFormat } from "youtube-dl-exec";
 
 class YoutubeDl {
   getLinks = async (options: { url: string }) => {
@@ -38,16 +38,17 @@ class YoutubeDl {
       youtubeSkipDashManifest: true,
       referer: options.url,
     });
+    let maxFile: YtFormat = output.formats[0];
     for (const format of output.formats) {
       if (format.vcodec !== "none" && format.acodec !== "none") {
-        const d = new Date();
-        path = await downloadFile(
-          format.url,
-          "vi" + d.getTime() + "_" + random(1000, 1000000000) + "." + format.ext
-        );
-        break;
+        if (format.filesize > maxFile?.filesize) maxFile = format;
       }
     }
+    const d = new Date();
+    path = await downloadFile(
+      maxFile.url,
+      "vi" + d.getTime() + "_" + random(1000, 1000000000) + "." + maxFile.ext
+    );
     return {
       tags: output?.tags,
       description: output?.description,

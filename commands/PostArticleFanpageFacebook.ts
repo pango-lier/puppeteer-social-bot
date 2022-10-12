@@ -3,6 +3,7 @@ import { PostVideoLinkYoutubeFacebook } from "App/Controllers/Service/Manual/src
 
 import Crawler from "App/Models/Crawler";
 import Target from "App/Models/Target";
+import { delay } from "bullmq";
 
 export default class PostArticleFanpageFacebook extends BaseCommand {
   /**
@@ -32,20 +33,18 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
   };
 
   public async run() {
-    const urls = ['https://www.youtube.com/watch?v=7EXfyD_Yae0&t=447s',
+    const urls = [
+      'https://www.youtube.com/watch?v=aVFgOtcm_KU',
       'https://www.youtube.com/watch?v=MjeFdeEBZBo',
-      'https://www.youtube.com/watch?v=epElL3Drc9A',
-      'https://www.youtube.com/watch?v=hGZCPXBgbv4&t=352s',
-      'https://www.youtube.com/watch?v=DzFX2631jJw',
-      'https://www.youtube.com/watch?v=nG1kAukuIsk',
-      'https://www.youtube.com/watch?v=Ev7eJ_--Nx8',
-      'https://www.youtube.com/watch?v=b33Bqu00eEU',
-      'https://www.youtube.com/watch?v=HK5OsDWYJmQ',
-      'https://www.youtube.com/watch?v=1CqGeAmVu1I',
-      'https://www.youtube.com/watch?v=NtaLEt4GqNw',
-      'https://www.youtube.com/watch?v=ESsSUMYbH6I',
-      'https://www.youtube.com/watch?v=XqunXMp-A1M',
-      'https://www.youtube.com/watch?v=XuKLs3oV3xU'];
+      'https://www.youtube.com/watch?v=4250y-QCp5s',
+      'https://www.youtube.com/watch?v=9hU8czBkYHc',
+      'https://www.youtube.com/watch?v=ecaGt5dfxu4',
+      'https://www.youtube.com/watch?v=AGUcRpPJOwQ',
+      'https://www.youtube.com/watch?v=JxuVzB4EBwo',
+      'https://www.youtube.com/watch?v=k_RusrLJeJM',
+      'https://www.youtube.com/watch?v=sFC1hfGdgbc',
+
+    ];
     const description = '';
     const tags = "#history #lichsu #lichsuAZ";
     const target = await Target.find(2);
@@ -53,6 +52,7 @@ export default class PostArticleFanpageFacebook extends BaseCommand {
 
     for (const url of urls) {
       if (target && crawler) await PostVideoLinkYoutubeFacebook({ url, description, tags }, crawler, target);
+      await delay(20);
     }
 
     // if (target) AutoGetShortYoutubePostFacebook(target);

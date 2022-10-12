@@ -21,3 +21,4 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'Api/Facebook/FanPagesController.post')
+Route.post('/', 'Api/AuthController.post')
